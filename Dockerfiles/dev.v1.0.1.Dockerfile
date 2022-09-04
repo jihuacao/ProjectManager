@@ -1,7 +1,6 @@
 # openssh-server
 ## 安装ssh
 RUN \
---mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
 echo 'config ssh' \
 && apt -y install openssh-server \
 && mkdir -p /var/run/sshd \
@@ -21,8 +20,13 @@ echo 'config ssh' \
 && echo "fi" >> ~/.bashrc \
 ## 拷贝认证
 && mkdir -p ~/.ssh \
-&& cp ~/DockerContext/ssh/authorized_keys ~/.ssh \
+&& cd ${DockerContextTarget} && cp ssh/authorized_keys ~/.ssh \
 && echo "end"
+
+RUN \
+echo "install binary tools" \
+&& apt -y install pandoc \
+&& echo "done"
 
 # service mysql start >>/root/startup_run.log
 # config the vscode
@@ -39,12 +43,3 @@ echo 'config ssh' \
 # ### vscode-server extensions拷贝
 # && tar -xvf ~/DockerContext/.vscode-server/x64_linux/extensions.tar.gz -C ~/.vscode-server \
 # && echo 'config vscode-server done'
-
-# 安装python常用开发库
-RUN \
-echo "pip install" \
-&& pip install matplotlib \
-&& pip install ipykernel \
-&& apt -y install git \
-&& apt -y install zip \
-&& echo "done"

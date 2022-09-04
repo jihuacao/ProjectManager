@@ -1,39 +1,5 @@
 # ops: config the pip
 RUN \
---mount=type=cache,target=/root/.cache \
-#--mount=type=bind,target=/root/.cache/pip,source=DockerContext/pip-cache,rw \
-mkdir ~/.pip \
-#&& cp /root/.cache/pip/test.md ~/ \
-## 换源
-&& echo '[global]' >> ~/.pip/pip.conf \
-&& echo 'index-url=http://mirrors.aliyun.com/pypi/simple/' >> ~/.pip/pip.conf \
-&& echo 'extra-index-url=http://pypi.mirrors.ustc.edu.cn/simple/' >> ~/.pip/pip.conf \
-&& echo '                http://pypi.douban.com/simple/' >> ~/.pip/pip.conf \
-&& echo '                https://pypi.tuna.tsinghua.edu.cn/simple/' >> ~/.pip/pip.conf \
-## 修改缓存地址
-&& echo '[install]' >> ~/.pip/pip.conf \
-&& echo 'trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf \
-&& echo '             pypi.mirrors.ustc.edu.cn' >> ~/.pip/pip.conf \
-&& echo '             pypi.douban.com' >> ~/.pip/pip.conf \
-&& echo '             pypi.tuna.tsinghua.edu.cn' >> ~/.pip/pip.conf \
-## 升级pip
-&& pip install --upgrade pip \
-&& echo 'end'
-
-RUN  \
-echo "pip insall" \
-&& pip install web.py \
-&& pip install fastapi==0.73.0 \
-&& pip install opencv-python \
-&& pip install uvicorn \
-&& pip install scipy \
-&& pip install web.py \
-&& pip install fastapi==0.73.0 \
-&& pip install opencv-python \
-&& pip install uvicorn \
-&& echo "done"
-
-RUN \
 echo "config apt" \
 && apt --help \
 && mv /etc/apt/sources.list /etc/apt/sources.list.backup \
@@ -47,58 +13,150 @@ echo "config apt" \
 && echo 'deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse' >> /etc/apt/sources.list \
 && echo 'deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse' >> /etc/apt/sources.list \
 && echo 'deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse' >> /etc/apt/sources.list \
-&& rm /etc/apt/sources.list.d/cuda.list \
-&& rm /etc/apt/sources.list.d/nvidia-ml.list \
 && apt-get update \
 && export DEBIAN_FRONTEND=noninteractive \
+&& apt -y install software-properties-common \
 && echo "end"
 
 RUN \
-echo "apt fix the opencv-python" \
-&& apt -y install libgl1-mesa-glx \
-&& apt -y install libglib2.0-0 \
+--mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
+echo "config c/cpp enviroment" \
+&& apt -y install gcc g++ make \
+&& bash /root/DockerContext/cmake-3.19.8-Linux-x86_64.sh --skip-license --prefix=/usr/local \
+&& apt -y install swig \
+&& apt -y install libpng-dev && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt -y install build-essential \
+zlib1g-dev \
+libffi-dev \
+libssl-dev \
+libncurses5-dev \
+libreadline-dev \
+libtk8.6 \
+libgdm-dev \
+libdb4o-cil-dev \
+libpcap-dev \
 && echo "done"
 
 RUN \
-echo "install the extra" \
-&& pip install curlify \
-&& pip install Crypto \
-&& pip install -U PyCryptodome \
-&& pip install paramiko==2.11.0 \
-&& pip install pyMySQL==1.0.2 \
-&& apt -y install lsb-release \
-&& apt -y install mysql-server mysql-client \
-&& echo "done"
-
-RUN \
-echo "install the net tools" \
+echo "install the tools" \
 && apt -y install telnet \
 && apt -y install net-tools \
 && apt -y install inetutils-ping \
+&& apt -y install git \
+&& apt -y install zip \
+&& apt -y install wget \
+&& apt -y install axel \
+&& apt -y install curl \
+&& apt -y install vim \
 && echo "done"
 
-RUN \
-echo "do install" \
-&& apt -y install swig \
-&& pip install M2Crypto \
-&& pip install openpyxl \
-&& echo "done"
-
-RUN \
-echo "support mmopenlab" \
-&& pip install mmcv-full==1.5.1 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.8.0/index.html \
-&& echo "mmopenlab done"
-
+# : 安装cuda开发集cu102
+ARG Download
+ARG ToolkitName=cuda_10.2.89_440.33.01_linux.run
+ARG CUDAToolkit=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/${ToolkitName}
+ARG ToolkitPatch1=cuda_10.2.1_linux.run
+ARG CUDAPatch1=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/patches/1/${ToolkitPatch1}
+ARG ToolkitPatch2=cuda_10.2.2_linux.run
+ARG CUDAPatch2=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/patches/2/${ToolkitPatch2}
 RUN \
 --mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
-echo "install for horovod" \
-&& echo "install nccl" \
-&& wget -c https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb \
-&& dpkg -i cuda-keyring_1.0-1_all.deb \
-&& apt-get update \
-&& apt -y --allow-change-held-packages install libnccl2=2.13.4-1+cuda10.2 libnccl-dev=2.13.4-1+cuda10.2 \
+echo "generate cuda env" \
+#&& echo "install cudatoolkit" \
+#&& cd ${DockerContextTarget} \
+#&& wget -c -q ${CUDAToolkit} \
+#&& chmod +x ${DockerContextTarget}/${ToolkitName} \
+#&& ${DockerContextTarget}/${ToolkitName} --toolkit --samples --silent \
+#&& wget -c -q ${CUDAPatch1} \
+#&& chmod +x ${DockerContextTarget}/${ToolkitPatch1} \
+#&& ${DockerContextTarget}/${ToolkitPatch1} --silent \
+#&& wget -c -q ${CUDAPatch2} \
+#&& chmod +x ${DockerContextTarget}/${ToolkitPatch2} \
+#&& ${DockerContextTarget}/${ToolkitPatch2} --silent \
+#&& echo 'PATH=/usr/local/cuda/bin:$PATH' >> ~/.bashrc \
+&& echo "install cudnn" \
+#&& echo "install nccl" \
+#&& wget -c https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb \
+#&& dpkg -i cuda-keyring_1.0-1_all.deb \
+#&& apt-get update \
+#&& apt -y --allow-change-held-packages install libnccl2=2.13.4-1+cuda10.2 libnccl-dev=2.13.4-1+cuda10.2 \
+&& echo "done"
+
+ARG MincondaPackage=Miniconda3-py39_4.12.0-Linux-x86_64.sh
+ARG MincondaRoot=/root/miniconda
+ARG MincondaEnvSetupBash=${MincondaRoot}/etc/profile.d/conda.sh
+RUN \
+--mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
+echo "generate miniconda env" \
+&& cd ${DockerContextTarget} \
+&& wget -q -c https://repo.anaconda.com/miniconda/${MincondaPackage} \
+&& chmod +x ${MincondaPackage} \
+&& bash ${MincondaPackage} -b -p ${MincondaRoot} -u \
+&& touch /root/.bashrc \
+&& chmod +x ${MincondaEnvSetupBash} \
+&& echo 'export PATH='${MincondaRoot}/bin':$PATH' >> /root/.bashrc \
+&& echo 'source '${MincondaEnvSetupBash} >> /root/.bashrc \
+&& echo 'conda activate base' >> /root/.bashrc \
+&& source /root/.bashrc \
+&& echo "done"
+ENV PATH=${MincondaRoot}/bin:$PATH
+
+RUN \
+--mount=type=cache,target=/root/.cache \
+mkdir -p ~/.pip \
+&& echo '[global]' >> ~/.pip/pip.conf \
+&& echo 'index-url=http://mirrors.aliyun.com/pypi/simple/' >> ~/.pip/pip.conf \
+&& echo 'extra-index-url=http://pypi.mirrors.ustc.edu.cn/simple/' >> ~/.pip/pip.conf \
+&& echo '                http://pypi.douban.com/simple/' >> ~/.pip/pip.conf \
+&& echo '                https://pypi.tuna.tsinghua.edu.cn/simple/' >> ~/.pip/pip.conf \
+&& echo '[install]' >> ~/.pip/pip.conf \
+&& echo 'trusted-host=mirrors.aliyun.com' >> ~/.pip/pip.conf \
+&& echo '             pypi.mirrors.ustc.edu.cn' >> ~/.pip/pip.conf \
+&& echo '             pypi.douban.com' >> ~/.pip/pip.conf \
+&& echo '             pypi.tuna.tsinghua.edu.cn' >> ~/.pip/pip.conf \
+&& pip install --upgrade pip \
+&& echo 'end'
+
+SHELL ["/bin/bash", "-c"]
+ARG DevCondaEnv=/root/enviroment.yaml
+ARG DevEnvName=MyEnv
+ARG PythonVersion=3.9.12
+RUN \
+echo "generate develop conda env" \
+&& touch ${DevCondaEnv} \
+&& echo 'name: '${DevEnvName} >> ${DevCondaEnv} \
+&& echo 'channels:' >> ${DevCondaEnv} \
+&& echo '  - conda-forge' >> ${DevCondaEnv} \
+&& echo 'dependencies:' >> ${DevCondaEnv} \
+&& echo '  - python=='${PythonVersion} >> ${DevCondaEnv} \
+&& source /root/.bashrc \
+&& conda env create -f ${DevCondaEnv} \
+&& echo 'conda activate '${DevEnvName} >> /root/.bashrc \
+&& echo "done"
+SHELL ["conda", "run", "-n", "MyEnv", "/bin/bash", "-c"]
+
+RUN \
+echo "install conda cuda enviroment" \
+&& echo "install cudatoolkit ops" \
+&& conda install -q -y cudatoolkit=10.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64/ \
+&& echo "install cudnn ops" \
+&& conda install -q -y cudnn=7.6.5 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
+&& echo "install nccl ops" \
+&& conda install -q -y -c conda-forge nccl \
+&& echo "done"
+
+RUN \
+--mount=type=cache,target=/root/DockerContext,id=DockerContext \
+echo "install nvidia toolset" \
+&& echo "install nvtop" \
+&& cd ${DockerContextTarget} \
+&& echo $(ls ${DockerContextTarget}) >> a.txt \
+&& echo $(ls ${DockerContextTarget}) >> a.txt \
+&& apt -y install libncurses5-dev libncursesw5-dev \
+&& wget -c -q https://github.com/Syllo/nvtop/archive/refs/tags/2.0.2.tar.gz -P ${DockerContextTarget} \
+&& tar -xvf 2.0.2.tar.gz && cd nvtop-2.0.2 && cmake ./ && make -j 4 && make install \
+&& echo "done"
+
+RUN \
+echo "config mpi environment" \
 && echo "install ompi" \
 && apt -y install openmpi-bin openmpi-doc libopenmpi-dev \
-&& echo "install horovod" \
-&& HOROVOD_WITH_PYTORCH=1 HOROVOD_GPU_OPERATIONS=NCCL HOROVOD_WITHOUT_GLOO=1 HOROVOD_WITH_MPI=1 pip install horovod==0.19.5 \
 && echo "done"
