@@ -6,7 +6,7 @@ ARG ToolkitPatch1=cuda_10.2.1_linux.run
 ARG CUDAPatch1=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/patches/1/${ToolkitPatch1}
 ARG ToolkitPatch2=cuda_10.2.2_linux.run
 ARG CUDAPatch2=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/patches/2/${ToolkitPatch2}
-RUN \
+RUN --mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
 echo "generate cuda env" \
 && echo "install cudatoolkit" \
 && cd ${DockerContextTarget} \

@@ -1,17 +1,17 @@
 RUN \
 echo "install" \
 && apt -y install libsndfile1 espeak espeak-ng libsndfile1-dev && rm -rf /var/lib/apt/lists/* \
-&& echo "# core deps" >> requirement.txt \
-&& echo "numpy==1.21.6;python_version<"3.10"" >> requirement.txt \
-&& echo "numpy==1.22.4;python_version=="3.10"" >> requirement.txt \
+&& echo "# core deps" > requirement.txt \
+&& echo "numpy==1.21.6;python_version<\"3.10\"" >> requirement.txt \
+&& echo "numpy==1.22.4;python_version==\"3.10\"" >> requirement.txt \
 && echo "cython==0.29.28" >> requirement.txt \
 && echo "scipy>=1.4.0" >> requirement.txt \
 && echo "torch>=1.7" >> requirement.txt \
 && echo "torchaudio" >> requirement.txt \
 && echo "soundfile" >> requirement.txt \
 && echo "librosa==0.8.0" >> requirement.txt \
-&& echo "numba==0.55.1;python_version<"3.10"" >> requirement.txt \
-&& echo "numba==0.55.2;python_version=="3.10"" >> requirement.txt \
+&& echo "numba==0.55.1;python_version<\"3.10\"" >> requirement.txt \
+&& echo "numba==0.55.2;python_version==\"3.10\"" >> requirement.txt \
 && echo "inflect==5.6.0" >> requirement.txt \
 && echo "tqdm" >> requirement.txt \
 && echo "anyascii" >> requirement.txt \
