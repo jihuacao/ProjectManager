@@ -7,5 +7,7 @@ echo "install dep" \
 && apt -y install libglib2.0-0 \
 && pip install rsa==4.9 \
 && echo "done"
+@mysql.v1.0.1.Dockerfile
+@shangtai.v1.0.1.Dockerfile
 
 # todo:删除cudadev环境

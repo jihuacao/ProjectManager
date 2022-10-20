@@ -25,7 +25,7 @@ echo "install" \
 && echo "umap-learn==0.5.1" >> requirement.txt \
 && echo "pandas" >> requirement.txt \
 && echo "# deps for training" >> requirement.txt \
-&& echo "matplotlib" >> requirement.txt \
+&& echo "matplotlib==3.6.0" >> requirement.txt \
 && echo "pyworld==0.2.10 # > 0.2.10 is not p3.10.x compatible" >> requirement.txt \
 && echo "# coqui stack" >> requirement.txt \
 && echo "trainer" >> requirement.txt \
