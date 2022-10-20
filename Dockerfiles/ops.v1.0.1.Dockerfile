@@ -29,6 +29,7 @@ echo "install data science library" \
 && pip install ipykernel \
 && pip install ptvsd==4.3.2 \
 && pip install colorama==0.4.5 \
+&& pip install loguru==0.6.0 \
 && echo "done"
 
 RUN \
