@@ -1,0 +1,3 @@
+[submodule "CommonConfig"]
+	path = CommonConfig
+	url = https://github.com/jihuacao/CommonConfig.git
