@@ -105,7 +105,7 @@ SHELL ["conda", "run", "-n", "MyEnv", "/bin/bash", "-c"]
 RUN \
 echo "install conda cuda enviroment" \
 && echo "install cudatoolkit ops" \
-&& conda install -q -y cudatoolkit=10.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64/ \
+&& conda install -q -y cudatoolkit=10.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
 && echo "install cudnn ops" \
 && conda install -q -y cudnn=7.6.5 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
 && echo "install nccl ops" \
