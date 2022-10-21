@@ -1,9 +1,3 @@
-RUN \
-echo "install service base lib support" \
-#&& apt -y install lsb-release \
-#&& apt -y install mysql-server mysql-client \
-&& echo "done"
-
 RUN  \
 echo "install service py support" \
 && pip install web.py \
@@ -30,9 +24,5 @@ echo "install data science library" \
 && pip install ptvsd==4.3.2 \
 && pip install colorama==0.4.5 \
 && pip install loguru==0.6.0 \
-&& echo "done"
-
-RUN \
-echo "support torch GCN" \
 && pip install "networkx==2.8.5" \
 && echo "done"

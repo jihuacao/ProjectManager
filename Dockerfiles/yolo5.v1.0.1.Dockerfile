@@ -1,9 +1,10 @@
 ARG TorchVersion=1.8.1
 RUN \
+--mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
 echo "support yolov5" \
-&& cd ${DockerContextTarget} && wget -c -q https://download.pytorch.org/whl/cu102/torch-1.8.1%2Bcu102-cp39-cp39-linux_x86_64.whl && pip install torch-1.8.1+cu102-cp39-cp39-linux_x86_64.whl \
-&& cd ${DockerContextTarget} && wget -c -q https://download.pytorch.org/whl/torchaudio-0.8.1-cp39-cp39-linux_x86_64.whl && pip install torchaudio torchaudio-0.8.1-cp39-cp39-linux_x86_64.whl \
-&& cd ${DockerContextTarget} && wget -c -q https://download.pytorch.org/whl/cu102/torchvision-0.9.1%2Bcu102-cp39-cp39-linux_x86_64.whl && pip install torchvision-0.9.1+cu102-cp39-cp39-linux_x86_64.whl \
+&& cd /root/DockerContext && wget -c -q https://download.pytorch.org/whl/cu102/torch-1.8.1%2Bcu102-cp39-cp39-linux_x86_64.whl && pip install --force-reinstall torch-1.8.1+cu102-cp39-cp39-linux_x86_64.whl \
+&& cd /root/DockerContext && wget -c -q https://download.pytorch.org/whl/torchaudio-0.8.1-cp39-cp39-linux_x86_64.whl && pip install --force-reinstall torchaudio torchaudio-0.8.1-cp39-cp39-linux_x86_64.whl \
+&& cd /root/DockerContext && wget -c -q https://download.pytorch.org/whl/cu102/torchvision-0.9.1%2Bcu102-cp39-cp39-linux_x86_64.whl && pip install --force-reinstall torchvision-0.9.1+cu102-cp39-cp39-linux_x86_64.whl \
 && pip install "tensorboard>=2.4.1" \
 && pip install "matplotlib>=3.2.2" \
 && pip install "numpy>=1.18.5" \

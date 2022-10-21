@@ -49,37 +49,6 @@ echo "install the tools" \
 && apt -y install vim \
 && echo "done"
 
-# : 安装cuda开发集cu102
-ARG Download
-ARG ToolkitName=cuda_10.2.89_440.33.01_linux.run
-ARG CUDAToolkit=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/${ToolkitName}
-ARG ToolkitPatch1=cuda_10.2.1_linux.run
-ARG CUDAPatch1=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/patches/1/${ToolkitPatch1}
-ARG ToolkitPatch2=cuda_10.2.2_linux.run
-ARG CUDAPatch2=https://developer.download.nvidia.com/compute/cuda/10.2/Prod/patches/2/${ToolkitPatch2}
-RUN \
---mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
-echo "generate cuda env" \
-#&& echo "install cudatoolkit" \
-#&& cd ${DockerContextTarget} \
-#&& wget -c -q ${CUDAToolkit} \
-#&& chmod +x ${DockerContextTarget}/${ToolkitName} \
-#&& ${DockerContextTarget}/${ToolkitName} --toolkit --samples --silent \
-#&& wget -c -q ${CUDAPatch1} \
-#&& chmod +x ${DockerContextTarget}/${ToolkitPatch1} \
-#&& ${DockerContextTarget}/${ToolkitPatch1} --silent \
-#&& wget -c -q ${CUDAPatch2} \
-#&& chmod +x ${DockerContextTarget}/${ToolkitPatch2} \
-#&& ${DockerContextTarget}/${ToolkitPatch2} --silent \
-#&& echo 'PATH=/usr/local/cuda/bin:$PATH' >> ~/.bashrc \
-&& echo "install cudnn" \
-#&& echo "install nccl" \
-#&& wget -c https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb \
-#&& dpkg -i cuda-keyring_1.0-1_all.deb \
-#&& apt-get update \
-#&& apt -y --allow-change-held-packages install libnccl2=2.13.4-1+cuda10.2 libnccl-dev=2.13.4-1+cuda10.2 \
-&& echo "done"
-
 ARG MincondaPackage=Miniconda3-py39_4.12.0-Linux-x86_64.sh
 ARG MincondaRoot=/root/miniconda
 ARG MincondaEnvSetupBash=${MincondaRoot}/etc/profile.d/conda.sh
@@ -141,22 +110,4 @@ echo "install conda cuda enviroment" \
 && conda install -q -y cudnn=7.6.5 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
 && echo "install nccl ops" \
 && conda install -q -y -c conda-forge nccl \
-&& echo "done"
-
-RUN \
---mount=type=cache,target=/root/DockerContext,id=DockerContext \
-echo "install nvidia toolset" \
-&& echo "install nvtop" \
-&& cd ${DockerContextTarget} \
-&& echo $(ls ${DockerContextTarget}) >> a.txt \
-&& echo $(ls ${DockerContextTarget}) >> a.txt \
-&& apt -y install libncurses5-dev libncursesw5-dev \
-&& wget -c -q https://github.com/Syllo/nvtop/archive/refs/tags/2.0.2.tar.gz -P ${DockerContextTarget} \
-&& tar -xvf 2.0.2.tar.gz && cd nvtop-2.0.2 && cmake ./ && make -j 4 && make install \
-&& echo "done"
-
-RUN \
-echo "config mpi environment" \
-&& echo "install ompi" \
-&& apt -y install openmpi-bin openmpi-doc libopenmpi-dev \
 && echo "done"

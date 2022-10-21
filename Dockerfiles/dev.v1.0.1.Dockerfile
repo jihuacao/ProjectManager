@@ -37,3 +37,15 @@ echo 'config vscode-server' \
 ### vscode-server服务端拷贝 todo: vscode-server commit-id需要自适应
 && tar -xvf ~/DockerContext/vscode-server.tar.gz -C ~/ \
 && echo 'config vscode-server done'
+
+RUN \
+--mount=type=cache,target=/root/DockerContext,id=DockerContext \
+echo "install nvidia toolset" \
+&& echo "install nvtop" \
+&& cd ${DockerContextTarget} \
+&& echo $(ls ${DockerContextTarget}) >> a.txt \
+&& echo $(ls ${DockerContextTarget}) >> a.txt \
+&& apt -y install libncurses5-dev libncursesw5-dev \
+&& wget -c -q https://github.com/Syllo/nvtop/archive/refs/tags/2.0.2.tar.gz -P ${DockerContextTarget} \
+&& tar -xvf 2.0.2.tar.gz && cd nvtop-2.0.2 && cmake ./ && make -j 4 && make install \
+&& echo "done"
