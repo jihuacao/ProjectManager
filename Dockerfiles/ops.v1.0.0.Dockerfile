@@ -38,7 +38,7 @@ libpcap-dev \
 
 RUN \
 echo "install the tools" \
-&& echo "fix the loophole"
+&& echo "fix the loophole" \
 && apt -y install dpkg=1.19.0.5ubuntu2.4 \
 && apt -y install e2fsprogs=1.44.1-1ubuntu1.4 \
 && apt -y install gzip=1.6-5ubuntu1.2 \
