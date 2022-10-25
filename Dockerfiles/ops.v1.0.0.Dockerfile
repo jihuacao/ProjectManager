@@ -136,7 +136,7 @@ RUN \
 echo "install conda cuda enviroment" \
 && echo "install cudatoolkit ops" \
 && wget -c --no-check-certificate https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/cudatoolkit-10.2.89-hfd86e86_0.conda -P /root/DockerContext \
-&& conda install -q -y --use-local /root/DockerContext/cudatoolkit-10.2.89-hfd86e86_0.conda
+&& conda install -q -y --use-local /root/DockerContext/cudatoolkit-10.2.89-hfd86e86_0.conda \
 && wget --no-check-certificate -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/cudatoolkit-10.2.89-hfd86e86_1.conda -P /root/DockerContext \
 && conda install -q -y --use-local /root/DockerContext/cudatoolkit-10.2.89-hfd86e86_1.conda \
 #&& conda install -q -y cudatoolkit=10.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
