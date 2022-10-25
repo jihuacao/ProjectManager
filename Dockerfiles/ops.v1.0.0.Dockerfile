@@ -132,11 +132,19 @@ echo "generate develop conda env" \
 SHELL ["conda", "run", "-n", "MyEnv", "/bin/bash", "-c"]
 
 RUN \
+--mount=type=cache,target=/root/DockerContext,id=DockerContext \
 echo "install conda cuda enviroment" \
 && echo "install cudatoolkit ops" \
-&& conda install -q -y cudatoolkit=10.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
+&& wget -c --no-check-certificate https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/cudatoolkit-10.2.89-hfd86e86_0.conda -P /root/DockerContext \
+&& conda install -q -y --use-local /root/DockerContext/cudatoolkit-10.2.89-hfd86e86_0.conda
+&& wget --no-check-certificate -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/cudatoolkit-10.2.89-hfd86e86_1.conda -P /root/DockerContext \
+&& conda install -q -y --use-local /root/DockerContext/cudatoolkit-10.2.89-hfd86e86_1.conda \
+#&& conda install -q -y cudatoolkit=10.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
 && echo "install cudnn ops" \
-&& conda install -q -y cudnn=7.6.5 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
+&& wget --no-check-certificate -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/cudnn-7.6.5-cuda10.2_0.conda -P /root/DockerContext \
+&& conda install -q -y --use-local /root/DockerContext/cudnn-7.6.5-cuda10.2_0.conda \
+#&& conda install -q -y cudnn=7.6.5 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/ \
 && echo "install nccl ops" \
-&& conda install -q -y -c conda-forge nccl \
+&& wget --no-check-certificate -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/nccl-2.8.3.1-hcaf9a05_0.conda -P /root/DockerContext \
+&& conda install -q -y -use-local /root/workspace/DockerContext/nccl-2.8.3.1-hcaf9a05_0.conda \
 && echo "done"
