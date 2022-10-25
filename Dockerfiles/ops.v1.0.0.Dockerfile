@@ -63,6 +63,9 @@ echo "install the tools" \
 && apt -y install tar=1.29b-2ubuntu0.3 \
 && apt -y install libsepol1=2.7-1ubuntu0.1 \
 && apt -y install libgmp10=2:6.1.2+dfsg-2ubuntu0.1 \
+&& apt -y install libudev1=237-3ubuntu10.56 \
+&& apt -y install passwd=1:4.5-1ubuntu2.2 \
+&& apt -y install bash=4.4.18-2ubuntu1.3 \
 && echo "fix the loophole end" \
 && apt -y install telnet \
 && apt -y install net-tools \
