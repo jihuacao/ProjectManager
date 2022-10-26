@@ -1,3 +1,4 @@
+@import:mysql.v1.0.1.Dockerfile
 RUN \
 echo "install shangtai" \
 && pip install xlrd==2.0.1 \
