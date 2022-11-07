@@ -1,18 +1,15 @@
 # syntax=docker/dockerfile:1.2
+FROM ubuntu:18.04
 
-ARG BaseSystem=ubuntu \
-BaseSystemTag=18.04 \
-CUDAVersion=10.2 \
-CUDNNVersion=7 \
-TorckVersion=1.8.1 \
-TFVersion=1.15 \
-PythonVersion=3.9.12
-
-FROM ${BaseSystem}:${BaseSystemTag}
+ARG CUDAVersion=10.2
+ARG CUDNNVersion=7
+ARG TorckVersion=1.8.1
+ARG TFVersion=1.15
+ARG PythonVersion=3.9.12
+ARG DockerContextSource=DockerContext
+ARG DockerContextTarget=/root/DockerContext
 
 RUN --mount=type=bind,target=/root/DockerContext,source=DockerContext,rw
-ENV DockerContextSource=DockerContext
-ENV DockerContextTarget=/root/DockerContext
 
 SHELL ["/bin/bash", "--login", "-c"]
 #FROM nvidia/cuda:$CUDAVersion-cudnn$CUDNNVersion-devel-$BaseSystem
