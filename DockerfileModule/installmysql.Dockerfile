@@ -1,11 +1,7 @@
-ARG MYSQL_ROOT_PASSWORD=123456
-ARG MYSQL_ROOT_USER=root
-ENV DEBIAN_FRONTEND noninteractive
-RUN \
-echo 'install MySQL' \
+&& echo 'install MySQL' \
 && echo mysql-apt-config mysql-apt-config/select-server select mysql-5.7 | debconf-set-selections \
-&& echo mysql-community-server mysql-community-server/root-pass $MYSQL_ROOT_PASSWORD rot | debconf-set-selections \
-&& echo mysql-community-server mysql-community-server/re-root-pass $MYSQL_ROOT_PASSWORD rot | debconf-set-selections \
+&& echo mysql-community-server mysql-community-server/root-pass 123456 rot | debconf-set-selections \
+&& echo mysql-community-server mysql-community-server/re-root-pass 123456 rot | debconf-set-selections \
 && apt update \
 && apt clean \
 && apt purge 'mysql*' \
@@ -25,4 +21,4 @@ echo 'install MySQL' \
 && echo "mysql -uroot -e \"ALTER USER""'""root""'""@""'""localhost""'"" IDENTIFIED BY ""'""123456""'"";\"">>~/.bashrc \
 && echo "mysql -uroot -p123456 -e \"create user ""'""normal""'""@""'""localhost""'"" identified by ""'""123456""'"";\"">>~/.bashrc \
 && echo "mysql -uroot -p123456 -e \"grant all on *.* to normal@""'""localhost""'"";\"">>~/.bashrc \
-&& echo 'done'
+&& echo 'done' \

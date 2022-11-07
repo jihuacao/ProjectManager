@@ -2,6 +2,7 @@ ARG TorchVersion=1.8.1
 RUN \
 --mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
 echo "support yolov5" \
+@import:../DockerfileModule/aptupdate.Dockerfile
 && pip install "tensorboard>=2.4.1" \
 && pip install "matplotlib>=3.2.2" \
 && pip install "numpy>=1.18.5" \
@@ -19,4 +20,6 @@ echo "support yolov5" \
 && pip install "opencv-python>=4.1.1" \
 && apt -y install libgl1-mesa-glx \
 && apt -y install libglib2.0-0 \
+@import:../DockerfileModule/aptclean.Dockerfile
+@import:../DockerfileModule/pipclean.Dockerfile
 && echo "done"
