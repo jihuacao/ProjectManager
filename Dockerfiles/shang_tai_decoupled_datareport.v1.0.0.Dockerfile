@@ -1,21 +1,17 @@
-ARG CondaEnvName=MyEnv
-ARG PythonVersion=3.9.12
-ARG PythonLink=/usr/bin/python39
-ARG CondaRoot=/usr
 RUN \
---mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
-echo "ops100" \
+echo "install shangtai_in_one" \
 @import:../DockerfileModule/aptupdatesource.Dockerfile
 @import:../DockerfileModule/aptupdate.Dockerfile
-@import:../DockerfileModule/fixtimeubuntu1804.Dockerfile
 @import:../DockerfileModule/ccppenv.Dockerfile
 @import:../DockerfileModule/fixubuntu1804.Dockerfile
 @import:../DockerfileModule/installbasetools.Dockerfile
 @import:../DockerfileModule/generateconda.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
+@import:../DockerfileModule/condaclean.Dockerfile
+@import:../DockerfileModule/pipclean.Dockerfile
 && echo "done"
 
-ENV PATH=${CondaRoot}/miniconda/bin:$PATH
+ENV PATH=/root/miniconda/bin:$PATH
 
 RUN \
 --mount=type=cache,target=/root/DockerContext,id=DockerContext \
@@ -30,10 +26,12 @@ RUN \
 echo "install conda dep" \
 && pip install --upgrade pip \
 @import:../DockerfileModule/aptupdate.Dockerfile
-@import:../DockerfileModule/installcondacudaops.Dockerfile
 @import:../DockerfileModule/installpywebserlib.Dockerfile
 @import:../DockerfileModule/installpyscilib.Dockerfile
-@import:../DockerfileModule/installpypytorch.Dockerfile
+&& pip install xlrd==2.0.1 \
+&& pip install openpyxl==3.0.10 \
+&& pip install rsa==4.9 \
+#@import:../DockerfileModule/installmysql.Dockerfile
 @import:../DockerfileModule/condaclean.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
 @import:../DockerfileModule/pipclean.Dockerfile

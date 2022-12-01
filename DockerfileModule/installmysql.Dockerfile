@@ -16,7 +16,8 @@
 && echo "default-character-set=utf8">>/etc/mysql/my.cnf \
 && echo "[mysql]">>/etc/mysql/my.cnf \
 && echo "default-character-set=utf8">>/etc/mysql/my.cnf \
-&& echo "/etc/init.d/mysql start">>~/.bashrc \
+&& echo "[mysql]">>/etc/mysql/my.cnf \
+&& echo "event_scheduler=ON">>/etc/mysql/my.cnf \
 && echo "/etc/init.d/mysql start">>~/.bashrc \
 && echo "mysql -uroot -e \"ALTER USER""'""root""'""@""'""localhost""'"" IDENTIFIED BY ""'""123456""'"";\"">>~/.bashrc \
 && echo "mysql -uroot -p123456 -e \"create user ""'""normal""'""@""'""localhost""'"" identified by ""'""123456""'"";\"">>~/.bashrc \
