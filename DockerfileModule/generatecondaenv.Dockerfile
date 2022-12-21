@@ -9,6 +9,5 @@
 && conda env create -f /root/enviroment.yaml \
 && echo 'conda activate 'MyEnv >> /root/.bashrc \
 && ln -sf ${CondaRoot}/miniconda/envs/MyEnv/bin/python ${PythonLink} \
-&& mkdir -p /root/miniconda/envs/MyEnv/bin \
-&& ln -sf ${CondaRoot}/miniconda/envs/MyEnv/bin/python /root/miniconda/envs/MyEnv/bin/python \
+&& ln -sf ${CondaRoot}/miniconda /root/miniconda \
 && echo "done" \
