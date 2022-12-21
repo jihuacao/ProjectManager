@@ -16,7 +16,7 @@ echo "support yolov5" \
 && pip install "seaborn==0.11.0" \
 && pip install "ipython==8.7.0" \
 && pip install "psutil==5.9.4" \
-&& pip install "thop==0.1.1" \
+&& pip install "thop==0.1.1.post2209072238" \
 && pip install "opencv-python==4.1.1" \
 && pip install -U "scikit-learn==1.2.0" \
 && pip install "shapely==2.0.0" \
