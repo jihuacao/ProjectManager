@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.2
-FROM nvidia/cuda:10.1-runtime-ubuntu18.04
+FROM nvidia/cuda:10.1-devel-ubuntu18.04
 
 ARG DockerContextSource=DockerContext
 ARG DockerContextTarget=/root/DockerContext

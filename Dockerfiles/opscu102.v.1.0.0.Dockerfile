@@ -34,7 +34,7 @@ echo "install conda dep" \
 @import:../DockerfileModule/installcondacudaops.Dockerfile
 @import:../DockerfileModule/installpywebserlib.Dockerfile
 @import:../DockerfileModule/installpyscilib.Dockerfile
-@import:../DockerfileModule/installpypytorch.Dockerfile
+@import:../DockerfileModule/installpypytorch181-cu102.Dockerfile
 @import:../DockerfileModule/condaclean.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
 @import:../DockerfileModule/pipclean.Dockerfile
