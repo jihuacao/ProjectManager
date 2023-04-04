@@ -12,4 +12,5 @@ libtk8.6 \
 libgdm-dev \
 libdb4o-cil-dev \
 libpcap-dev \
+&& apt -y install gdb \
 && echo "done" \

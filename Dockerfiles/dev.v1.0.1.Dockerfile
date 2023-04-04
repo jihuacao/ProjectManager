@@ -9,6 +9,6 @@ echo "generate dev env" \
 @import:../DockerfileModule/installnormaldevtool.Dockerfile
 @import:../DockerfileModule/installnvtop.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
-@import:../DockerfileModule/condaclean.Dockerfile
-@import:../DockerfileModule/pipclean.Dockerfile
+#@import:../DockerfileModule/condaclean.Dockerfile
+#@import:../DockerfileModule/pipclean.Dockerfile
 && echo "done"

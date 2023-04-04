@@ -20,6 +20,7 @@ echo "support yolov5" \
 && pip install "opencv-python==4.6.0.66" \
 && pip install -U "scikit-learn==1.2.0" \
 && pip install "shapely==2.0.0" \
+&& pip install albumentations==1.0.3 \
 && apt -y install libgl1-mesa-glx \
 && apt -y install libglib2.0-0 \
 @import:../DockerfileModule/aptclean.Dockerfile
