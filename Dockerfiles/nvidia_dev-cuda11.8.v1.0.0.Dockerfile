@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM nvidia/cuda:11.8.0-devel-ubuntu18.04
 
 RUN --mount=type=bind,target=/root/DockerContext,source=DockerContext,rw \
 echo "install nvidia HPC" \
@@ -8,7 +8,8 @@ echo "install nvidia HPC" \
 @import:../DockerfileModule/fixtime_ubuntu.Dockerfile
 @import:../DockerfileModule/fixchinese_ubuntu.Dockerfile
 @import:../DockerfileModule/ccppenv.Dockerfile
-@import:../DockerfileModule/nvidia-hpc-sdk-cuda118-ubuntu.Dockerfile
+#@import:../DockerfileModule/nvidia-cuda11.8-dev-ubuntu18.04.Dockerfile
+#@import:../DockerfileModule/nvidia-hpc-sdk-cuda118-ubuntu.Dockerfile
 @import:../DockerfileModule/nvidia-DL-dev-cuda118-ubuntu18.04.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
 && echo "done"
@@ -37,7 +38,7 @@ echo "install conda dep" \
 && pip install --upgrade pip \
 @import:../DockerfileModule/installpywebserlib.Dockerfile
 @import:../DockerfileModule/installpyscilib.Dockerfile
-@import:../DockerfileModule/install_py_dl_env_ubuntu2004-cuda117.Dockerfile
+@import:../DockerfileModule/install-py_dl_env-cuda11.8-ubuntu.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
 @import:../DockerfileModule/pipclean.Dockerfile
 && echo "install conda env dep"
