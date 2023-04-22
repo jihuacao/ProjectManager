@@ -1,13 +1,14 @@
 # HPC
-# required: gcc、g++、environment-modules
-&& now=$(pwd) \
-&& cd /root/DockerCOntext/ \
-&& curl https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK \
-&& cat DEB-GPG-KEY-NVIDIA-HPC-SDK | gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg \
-&& cd ${now} \
-&& echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | tee /etc/apt/sources.list.d/nvhpc.list
-&& apt -y update \
-&& apt -y install nvhpc-22-11
+# required: gcc、g++、environment-modules gpg
+#&& apt -y instal gpg ca-certificates \
+#&& now=$(pwd) \
+#&& cd /root/DockerCOntext/ \
+#&& curl https://developer.download.nvidia.com/hpc-sdk/ubuntu/DEB-GPG-KEY-NVIDIA-HPC-SDK \
+#&& cat DEB-GPG-KEY-NVIDIA-HPC-SDK | gpg --dearmor -o /usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg \
+#&& cd ${now} \
+#&& echo 'deb [signed-by=/usr/share/keyrings/nvidia-hpcsdk-archive-keyring.gpg] https://developer.download.nvidia.com/hpc-sdk/ubuntu/amd64 /' | tee /etc/apt/sources.list.d/nvhpc.list
+#&& apt -y update \
+#&& apt -y install nvhpc-22-11
 && if [ ! -d "/root/DockerContext/nvhpc_2022_2211_Linux_x86_64_cuda_11.8" ]; then wget -c https://developer.download.nvidia.com/hpc-sdk/22.11/nvhpc_2022_2211_Linux_x86_64_cuda_11.8.tar.gz -P /root/DockerContext/ else echo "has"; fi \
 && now=$(pwd) && cd /root/DockerContext \
 && if [ ! -d "nvhpc_2022_2211_Linux_x86_64_cuda_11.8" ]; then tar -xvf nvhpc_2022_2211_Linux_x86_64_cuda_11.8.tar.gz; else echo "has"; fi \
