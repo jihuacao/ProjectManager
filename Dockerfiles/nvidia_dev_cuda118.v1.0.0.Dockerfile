@@ -38,7 +38,7 @@ echo "install conda dep" \
 && pip install --upgrade pip \
 @import:../DockerfileModule/installpywebserlib.Dockerfile
 @import:../DockerfileModule/installpyscilib.Dockerfile
-@import:../DockerfileModule/install-py_dl_env-cuda11.8-ubuntu.Dockerfile
+@import:../DockerfileModule/install-py_dl_env-cuda11.8-ubuntu1804.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
 @import:../DockerfileModule/pipclean.Dockerfile
 && echo "install conda env dep"
