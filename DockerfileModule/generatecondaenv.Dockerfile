@@ -1,5 +1,6 @@
 && echo "generate develop conda env" \
 && touch /root/enviroment.yaml \
+&& rm /root/enviroment.yaml \
 && echo 'name: 'MyEnv >> /root/enviroment.yaml \
 && echo 'channels:' >> /root/enviroment.yaml \
 && echo '  - conda-forge' >> /root/enviroment.yaml \
