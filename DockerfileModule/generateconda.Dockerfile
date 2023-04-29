@@ -7,6 +7,5 @@
 && echo 'export PATH='${CondaRoot}/miniconda/bin':$PATH' >> /root/.bashrc \
 && echo 'source '${CondaRoot}/miniconda/etc/profile.d/conda.sh >> /root/.bashrc \
 && echo 'conda activate base' >> /root/.bashrc \
-&& source /root/.bashrc \
 && echo "done" \
 @import:../DockerfileModule/pipconfigsource.Dockerfile

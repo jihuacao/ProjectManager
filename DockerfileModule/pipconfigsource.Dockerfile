@@ -1,4 +1,5 @@
 && mkdir -p ~/.pip \
+&& touch ~/.pip/pip.conf \
 && rm ~/.pip/pip.conf \
 && echo '[global]' >> ~/.pip/pip.conf \
 && echo 'index-url=http://mirrors.aliyun.com/pypi/simple/' >> ~/.pip/pip.conf \

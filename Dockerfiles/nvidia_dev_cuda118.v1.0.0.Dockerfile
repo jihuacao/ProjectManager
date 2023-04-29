@@ -34,11 +34,12 @@ echo "generate conda env" \
 SHELL ["conda", "run", "-n", "MyEnv", "/bin/bash", "-c"]
 
 RUN --mount=type=cache,target=/root/DockerContext,id=DockerContext \
-echo "install conda dep" \
+echo "install python dev dep" \
 && pip install --upgrade pip \
+@import:../DockerfileModule/aptupdate.Dockerfile
 @import:../DockerfileModule/installpywebserlib.Dockerfile
 @import:../DockerfileModule/installpyscilib.Dockerfile
-@import:../DockerfileModule/install-py_dl_env-cuda11.8-ubuntu1804.Dockerfile
+@import:../DockerfileModule/install-py_dl_env-cuda11.8-ubuntu18.04.Dockerfile
 @import:../DockerfileModule/aptclean.Dockerfile
 @import:../DockerfileModule/pipclean.Dockerfile
-&& echo "install conda env dep"
+&& echo "install python dev dep done"

@@ -6,7 +6,6 @@
 && echo '  - conda-forge' >> /root/enviroment.yaml \
 && echo 'dependencies:' >> /root/enviroment.yaml \
 && echo '  - python=='${PythonVersion} >> /root/enviroment.yaml \
-&& source /root/.bashrc \
 && conda env create -f /root/enviroment.yaml \
 && echo 'conda activate 'MyEnv >> /root/.bashrc \
 && ln -sf ${CondaRoot}/miniconda/envs/MyEnv/bin/python ${PythonLink} \
